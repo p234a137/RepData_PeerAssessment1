@@ -8,10 +8,18 @@ output:
 
 ## Loading and preprocessing the data
 
+```{r preprocessing}
+activity <- read.csv('activity.csv')
+```
 
 
 ## What is mean total number of steps taken per day?
-
+```{r steps}
+library(ggplot2)
+qplot(activity$steps, geom="histogram")
+mean(activity$steps, na.rm = TRUE)
+median(activity$steps, na.rm = TRUE)
+```
 
 
 ## What is the average daily activity pattern?
