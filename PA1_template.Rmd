@@ -67,5 +67,34 @@ for(i in 1:nrow(activity)) { # loop over rows of original dataset
 }
 ```
 
+Re-calculate total number of steps per day and redo histogram using the imputed dataset.
+```{r total_steps_after_imputing}
+dailySteps2 <- tapply(activity2$steps, activity2$date, sum, simplify=TRUE)
+hist(dailySteps2, main="Total number of steps per day after imputing", xlab="steps")
+```
+
+The mean and median number of steps after imputing
+```{r mean_and_median_after_imputing}
+mean(dailySteps2, na.rm = TRUE) # na.rm=TRUE actually not needed anymore
+median(dailySteps2, na.rm = TRUE)
+```
+The mean and the median after imputing do not change much from the ones we calculated before imputing.
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+First convert days to weekdays, then to two factors. Add those factors to the data set.
+
+```{r weekdays_weekends}
+what_day <- weekdays(as.Date(activity2$date))
+what_day[what_day=="Sunday" | what_day=="Saturday"] = "Weekend"
+what_day[what_day!="Weekend"] = "Weekday"
+activity2$day <- what_day
+#
+intervalStepsWeekend <- tapply(activity2$steps[activity2$day=="Weekend"], activity2$interval[activity2$day=="Weekend"], mean, na.rm = TRUE, simplify=TRUE)
+intervalStepsWeekday <- tapply(activity2$steps[activity2$day=="Weekday"], activity2$interval[activity2$day=="Weekday"], mean, na.rm = TRUE, simplify=TRUE)
+
+par(mfrow=c(2,1))
+plot(interval, intervalStepsWeekend, type='l', main='weekend', ylab="steps", ylim=c(0.,250.))
+plot(interval, intervalStepsWeekday, type='l', main='weekday', ylab="steps", ylim=c(0.,250.))
+```
+
