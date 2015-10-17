@@ -141,3 +141,4 @@ plot(interval, intervalStepsWeekday, type='l', main='weekday', ylab="steps", yli
 
 ![](PA1_template_files/figure-html/weekdays_weekends-1.png) 
 
+The activity patterns change significantly between weekends and weekdays. This is to be expected due to the change on the average sleeping times and general daily activities of people on weekends as compared to the week days.
